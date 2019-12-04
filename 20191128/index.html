@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>test</title>
+</head>
+<body>
+	
+	<script>
+	const log = console.log;
+	function fact(n,ret) {
+		//console.log('n:', n, 'ret:',ret);
+    if(n == 0){
+				console.log('1n:', n, 'ret:',ret());
+        ret(1);
+
+    }else {
+			fact(n-1, function(t0) { 	
+			
+				//console.log('asdaf:',n,'t0:',t0,'=>',n * t0);
+				console.log('n:',n,'t0:', t0);
+				ret(n * t0); 
+				console.log('----')
+			});
+		}
+	}
+
+	fact (5,function(n) {
+		//console.log('a');
+    log('last:',n); // 콘솔에 120이 출력된다.
+	});
+
+
+
+
+	</script>
+</body>
+</html>
