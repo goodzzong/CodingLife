@@ -1,0 +1,41 @@
+<script>const log = console.log;</script>
+
+
+<script>
+const Operator = class {
+	static factory(v){
+		if(v instanceof Object){
+			if(!Array.isArray(v)) v = Object.values(v);
+			return new ArrayOp(v.map(v => Operator.factory(v)));
+		} else return new PrimaOp(v);
+	}
+	constructor(v) {this.v = v;}
+	operation(f){ 
+		throw 'override';
+	}
+};
+
+const PrimaOp = class extends Operator {
+	constructor(v) {super(v);}
+	operation(f){ f(this.v);}
+};
+
+const ArrayOp = class extends Operator {
+	constructor(v) {super(v);}
+	operation(f){
+		console.log('result:', this.v);
+		for(const v of this.v) {
+			//log("v = ",v);
+			//log(v.operation);
+			v.operation(f)
+		};
+	}
+}
+Operator.factory([{a:[1,2,3,4], b:'-'}, [5,6,7], 8, 9]).operation(log);
+
+const test = [{a:[1,2,3,4], b:'-'}, [5,6,7], 8, 9];
+const result = test.map(v => Operator.factory(v));
+
+log("-------------------");
+log(result[0].v[0].v[3].v);
+</script>

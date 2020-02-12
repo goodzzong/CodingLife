@@ -1,0 +1,147 @@
+<script>const log = console.log; </script>
+
+<script>
+
+const memorize = f => {
+	const cache = {};
+//	console.log(cache);
+	return (x) => {
+		if (cache[x] == undefined) cache[x] = f(x);
+		return cache[x];
+	}
+};
+
+const memorize2 = f => {
+	const cache = {};
+	
+	return function (){
+		let key = "";
+		for ( let i = 0; i < arguments.length; i++) key += arguments[i] + ",";
+
+		if (cache[key] == undefined) cache[key] = f.apply(null, arguments);
+		return cache[key];
+	};
+};
+
+const isPrime = n => {
+	if (n < 2) return false;
+
+
+	const m = Math.sqrt(n);
+	for (let i = 2; i <= m; i++) {
+		if (n % i === 0) return false;
+	}
+	return true;
+}; 
+
+const fibonacci = n => {
+	if (n < 2) return n;
+	return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+const isPrime_memo = memorize(isPrime);
+const isPrime_memo2 = memorize2(isPrime);
+const fibonacci_memo = memorize(fibonacci);
+
+// for ( let i = 2; i <= 20; i++) {
+// 	isPrime_memo2(i)	
+// }
+// for ( let i = 0; i <= 20; i++) {
+// 	console.log(i, ":", fibonacci_memo(i));
+// }
+
+
+// 함수의 합성
+const compose = (f, g) => {
+	return function(x) {
+		return f(g(x));
+	};
+};
+
+const square = x => x * x;
+const add1 = (arg) => {
+	let result = 0;
+	for ( const a of arg) result += a;
+	return result;
+};
+const sub1 = x => x - 1;
+
+const a = compose(square,add1);
+const b = compose(square,sub1);
+//log(b(2));
+
+const compose2 = (f, g) => {
+	return function() {
+
+		return f.call(this, g.call(this, arguments));
+	};
+};
+
+const x = compose2(square,add1);
+
+
+//log(x(1,2));
+
+function product(x, y) {
+	log(this);
+	return x * y;
+}
+
+//const product2 = y => product(2, y);
+
+//log(product2(3));
+const product2 = product.bind(null, 2);
+//log(product2(3));
+
+function partial(f) {
+	const args = arguments;
+
+	return function() {
+		var a = Array.prototype.slice.call(args, 1); // 인자 Math.pow, undefined, 2 중에 2번째 인자 부터 추출
+
+		for(let i=0, j=0; i < a.length; i++) {
+			if (a[i] == undefined) a[i] = arguments[j++];
+		}
+		log(a)
+		return f.apply(this, a);
+	};
+};
+
+const square2 = partial(Math.pow, undefined, 2);
+//log(square2(2));
+
+const pow = function(exponent) {
+	return function(base) {
+		return Math.pow(base, exponent);
+	};
+};
+
+const sum = (a, b) => a + b;
+const aa = [1, 2, 3, 4];
+//log(aa.map(pow(2)).reduce(sum));
+
+function* test() {
+	yield 1;
+	yield 2;
+	yield 3;
+	yield 4;
+}
+const iter = test();
+for ( const a of iter) log(a);
+
+function* idMaker() {
+	let count = 0;
+
+	while(true) {
+		try {
+			if (count === 10) throw Error;
+			yield count++;
+		} catch (error) {
+			log('오류');
+		}
+	}
+}
+
+const idTest = idMaker();
+
+</script>
