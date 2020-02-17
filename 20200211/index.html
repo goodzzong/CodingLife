@@ -36,6 +36,27 @@ Operator.factory([{a:[1,2,3,4], b:'-'}, [5,6,7], 8, 9]).operation(log);
 const test = [{a:[1,2,3,4], b:'-'}, [5,6,7], 8, 9];
 const result = test.map(v => Operator.factory(v));
 
-log("-------------------");
-log(result[0].v[0].v[3].v);
+//log("-------------------");
+//log(result[0].v[0].v[3].v);
+
+var isValid = function(S) {
+    const str = "abc";
+    const st = Array.from(S);
+    let result = true;
+
+    while(st.length > 0) {
+        const index = st.join("").indexOf(str);
+        if (index < 0 && st.length > 0){
+            result = false;
+            break;
+        }
+        
+        st.splice(index, 3);
+        
+    }
+    return result;
+};
+console.clear();
+log(isValid("abccba"));
+
 </script>

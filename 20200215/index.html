@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<ul id="todo-app">
+    <li class="item">Walk the dog</li>
+    <li class="item">Pay bills</li>
+    <li class="item">Make dinner</li>
+    <li class="item">Code for one hour</li>
+	</ul>
+	
+	<script>
+
+		document.addEventListener('DOMContentLoaded', function() {
+
+			let app = document.getElementById('todo-app');
+
+			// 리스트 아이템의 전체 영역에 이벤트 리스너를 등록합니다.
+			app.addEventListener('click', function(e) {
+				if (e.target && e.target.nodeName === 'LI') {
+					let item = e.target;
+					alert('you clicked on item: ' + item.innerHTML);
+				}
+			});
+
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<script>const log = console.log;</script>
+
+
+<script>
+class Queue {
+	constructor() {
+		this.inStack = [];
+		this.outStack = [];
+	}
+
+	enqueue(n) {
+		this.inStack.push(n);
+	}
+
+	dequeue() {
+		
+		if (this.outStack.length === 0) {
+			while(this.inStack.length > 0) {
+				this.outStack.push(this.inStack.pop());
+			}
+		}
+
+
+		return this.outStack.pop();
+	}
+}
+
+
+const test = new Queue();
+
+test.enqueue(1);
+test.enqueue(2);
+
+log(test.dequeue());
+test.enqueue(3);
+log(test.dequeue());
+log(test.dequeue());
+log(test.dequeue());
+
+</script>

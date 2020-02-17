@@ -25,8 +25,6 @@ const memorize2 = f => {
 
 const isPrime = n => {
 	if (n < 2) return false;
-
-
 	const m = Math.sqrt(n);
 	for (let i = 2; i <= m; i++) {
 		if (n % i === 0) return false;
@@ -43,9 +41,9 @@ const isPrime_memo = memorize(isPrime);
 const isPrime_memo2 = memorize2(isPrime);
 const fibonacci_memo = memorize(fibonacci);
 
-// for ( let i = 2; i <= 20; i++) {
-// 	isPrime_memo2(i)	
-// }
+for ( let i = 2; i <= 20; i++) {
+	if (isPrime_memo(i)) log(i);
+}
 // for ( let i = 0; i <= 20; i++) {
 // 	console.log(i, ":", fibonacci_memo(i));
 // }
