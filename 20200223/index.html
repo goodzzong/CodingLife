@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>transform 이벤트</title>
+	<style>
+		.transition {
+			width: 100px;
+			height: 100px;
+			background: rgba(255,0,0,1);
+			transition-property: transform background;
+			transition-duration: 2s;
+			transition-delay: 1s;
+		}
+
+		.transition:hover {
+			transform: rotate(90deg);
+			background: rgba(255,0,0,0);
+		}
+	</style>
+</head>
+<body>
+	<div class="transition">Hover over me</div>
+	<div class="message"></div>
+
+	<script>
+		const message = document.querySelector('.message');
+		const el = document.querySelector('.transition');
+
+		el.addEventListener('transitionrun', function() {
+			message.textContent = 'transitionrun fired';
+		});
+
+		el.addEventListener('transitionstart', function() {
+			message.textContent = 'transitionstart fired';
+		});
+
+		el.addEventListener('transitioncancel', function() {
+			message.textContent = 'transitioncancel fired'; 
+		}); 
+
+		el.addEventListener('transitionend', function() {
+			message.textContent = 'transitionend fired'; 
+		});
+	</script>
+</body>
+</html>
