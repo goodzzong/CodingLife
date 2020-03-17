@@ -1,0 +1,28 @@
+<script>const log = console.log;</script>
+
+<script>
+
+	function *infinity(n = 0) {
+		while(true) {
+			yield n++;
+		}
+	}
+
+	function *limit(n, iter) {
+		for (const a of iter) {
+			yield a;
+			if (a == n) return;
+		}
+	}
+
+	function *odds(n) {
+		for ( const a of limit(n, infinity(1)) ) {
+			if (a % 2) yield a;
+		}
+	}
+
+	let iter = odds(40);
+
+	for (const a of iter) log(a);
+
+</script>
