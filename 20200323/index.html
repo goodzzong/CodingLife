@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<p>윤년은 4로도 나누어 떨어지고 100으로도 나누어 떨어지지만 400으로는 나누어 떨어지지 않는 해이다. </p>
+
+
+<script>
+	// 이진 검색
+	// function binarySearch(x, a) {
+	// 	const n = a.length;
+	// 	let left = 0, right= n - 1;
+	// 	while( left < right) {
+	// 		const middle = Math.floor((left + right) / 2);
+
+	// 		if ( x <= a[middle]) {
+	// 			right = middle;
+	// 		} else {
+	// 			left = middle + 1;
+	// 		}
+	// 	}
+
+	// 	if ( x === a[right] ) return right;
+	// 	return null;
+	// }
+
+
+	// const a = [2,4,7,12,15,21,34,35,46,57,70,82,86,92,99];
+	// console.log(binarySearch(82, a));
+
+
+
+</script>
+
+<script>
+		// 에라토스테네스의 체로 쌍둥이 소수 구하기
+		// let n = parseInt(prompt("n?"));
+		// const p = [];
+		// for (let i = 2; i <= n ; i++) p[i] = true;
+		// const max = Math.floor(Math.sqrt(n));
+		// let x = 2;
+
+		// console.log("p[]:", p);
+		// while( x <= max) {
+		// 	for ( let i = 2 * x ; i <= n ; i += x) {
+		// 		console.log('i:', i);
+		// 		p[i] = false;
+		// 	}
+		// 	while(!p[++x]) console.log('x:', x,"&&", !p[x]);
+		// }
+
+		// for ( let i = 2; i <= n - 2 ; i++) {
+		// 	if(p[i] && p[i+2]) {
+		// 		document.write(i + "," + (i + 2) + "<br />");
+		// 	}
+		// }
+
+</script>
+
+<script>
+	// 퀵 정렬
+	// x :  정렬한 배열
+	// first : 정렬할 첫 번째 요소의 위치
+	// last : 정렬할 마지막 요소의 위치
+
+	function quicksort(x, first, last) {
+		const p = x[ Math.floor((first + last)/2) ];
+		//console.log('first:', first);
+		let i = first;
+		let j = last;
+		
+		for(; ; i++, j--) {
+			while( x[i] < p ) {
+				
+				i++;
+			}
+			while( p < x[j] ) {
+				
+				j--;
+				console.log('i:', i,'& j:', j);
+			}
+			
+			if( i >= j ) break;
+			
+			const w = x[i]; x[i] = x[j]; x[j] = w;
+			console.log('x:', x);
+			console.log('1i:', i,'& 1j:', j);
+			console.log('x[i]:', x[1]);
+		}
+
+		
+		//[1, 2, 5, 3, 8, 9, 7]
+		//console.log('i:',i);
+		
+		// if (first < i -1) quicksort(x, first, i -1);
+		// if (j + 1 < last) quicksort(x, j+1, last);
+	}
+
+	const a = [7, 2, 5, 1, 8, 9, 3];
+	quicksort(a, 0, a.length -1);
+	//console.log(a);
+</script>
+</body>
+</html>

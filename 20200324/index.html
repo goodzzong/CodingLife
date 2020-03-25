@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>장바구니</title>
+	<script src="./lib/fx.js"></script>
+</head>
+<body>
+	<div id="cart"></div>
+
+	<script>
+		const products = [
+			{ name: '반팔티', price: 15000, quantity: 1, is_selected: true },
+			{ name: '긴팔티', price: 20000, quantity: 2, is_selected: false },
+			{ name: '핸드폰케이스', price: 15000, quantity: 3, is_selected: true },
+			{ name: '후드티', price: 30000, quantity: 4, is_selected: false },
+			{ name: '바지', price: 25000, quantity: 5, is_selected: true },
+		];
+		/*
+			go(products,
+				map(p => p.quantity),
+				reduce((a, b) => a + b), 
+				log
+			);		
+			go 를 실행하면 내부적으로 reduce를 실행한다.
+			reduce 는 curry로 감싸주고 있어서 리듀스 함수를 클로저로 가지고 있는 상태가 된다.
+			그 상황에서 go에 넘겨준 파라미터들을 하나씩 reduce 로 실행해 준다.
+			curry로 감싼 리듀스는 리듀스 함수를 클로저로 가지고 있다가 
+			go로 넘겨온 args 파라미터를 함수와 함께 넘겨주면 
+			f(a, ..._) 이러한 형태로 실행 된다.
+			f 는 리듀스 함수 
+			a 는 go에 정의된 리듀스 함수에서 첫번째 파라미터로 넘겨주는 함수이다.
+
+		*/
+	//	console.log('a',map(p => p.quantity)); a 는 p => p.quantity
+
+	const add = (a, b) => a + b;
+	
+	const sum = curry((f, iter) => go(
+		iter,
+		map(f),
+		reduce(add), 
+	));
+
+	const total_quantity = products => sum(p => p.quantity, products);
+	const total_price = pipe(
+			map(p => p.price * p.quantity),
+			reduce(add), 
+		);
+	const is_selected = products => filter(p => p.is_selected, products);
+		// log(total_price(products));	
+
+		// log(sum(u => u.age, [
+		// 	{age: 30 },
+		// 	{age: 20 },
+		// ]));
+
+
+		document.querySelector('#cart').innerHTML = `
+		<table>
+			<tr>
+				<th></th>
+				<th>상품 이름</th>
+				<th>가격</th>
+				<th>수량</th>
+				<th>총 가격</th>				
+			</tr>
+			${go(products,
+				sum(p => `
+					<tr>
+						<td><input type="checkbox" ${p.is_selected ? 'checked': ''} /> </td>
+						<td>${p.name}</td>
+						<td>${p.price}</td>
+						<td><input type="number" value='${p.quantity}' /></td>
+						<td>${p.price * p.quantity}</td>				
+					</tr>	
+				`),	
+			)}
+
+			<tr>
+				<td colspan='3'>합계</td>
+				<td>${total_quantity(is_selected(products))}</td>
+				<td>${total_price(is_selected(products))}</td>				
+			</tr>			
+		</table>
+		`;
+	</script>
+
+</body>
+</html>
